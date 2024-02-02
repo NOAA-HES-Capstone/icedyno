@@ -10,3 +10,4 @@ platforms = ["win-64", "linux-64", "osx-64"]
 
 [dependencies]
 pre-commit = ">=3.6.0,<3.7"
+pytest = ">=8.0.0,<8.1"
