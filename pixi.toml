@@ -1,10 +1,10 @@
 [project]
 name = "icedyno"
 version = "0.1.0"
-description = "Add a short description here"
-authors = ["Julieanna Bacon <julieannabacon2014@gmail.com>"]
+description = "HES Capstone: Short-term forecasting of artic sea-ice boundaries"
+authors = ["Julieanna Bacon <julieannabacon2014@gmail.com>", "Soolu Thomas <sot204@g.harvard.edu>", "Brendon Gory <brg294@g.harvard.edu>", "Matthew Thanos <mpt986@g.harvard.edu>", "Ruchi Asthana <rua490@g.harvard.edu>"]
 channels = ["conda-forge"]
-platforms = ["linux-64"]
+platforms = ["win-64", "linux-64", "osx-64"]
 
 [tasks]
 
