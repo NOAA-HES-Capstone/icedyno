@@ -1,18 +1,18 @@
 # Setup
-To get started, clone the repo, checkout this branch, using Linux or Mac install pixi with:
+To get started, clone the repo, checkout this branch, using Linux or Mac install pixi with:  
 ```curl -fsSL https://pixi.sh/install.sh | bash```
 
-If using windows, install pixi with:
+If using windows, install pixi with:  
 ```iwr -useb https://pixi.sh/install.ps1 | iex```
 
-See here for more info on pixi: https://pixi.sh/
+See here for more info on pixi: https://pixi.sh/.
 
-Then to install the project and its dependencies, type:
+Then to install the project and its dependencies, type:  
 ```pixi install```
 
-You could activate the virtual environment with `pixi shell` or every time you want to use the environment, prefix your commands with `pixi run` inside the icedyno project folder (ex: `pixi run pytest`).
+You could activate the virtual environment with `pixi shell` (so every command uses the virtual environment until you type `exit`) or prefix your commands with `pixi run` inside the icedyno project folder (ex: `pixi run pytest`).
 
-To set up the automatic linters (that run every time you commit your work), you would run:
+To set up the automatic linters (that run every time you commit your work), you would run:  
 ```pixi run pre-commit install```
 
 ![install_pre_commit](images/install_pre_commit.png)
@@ -20,7 +20,7 @@ To set up the automatic linters (that run every time you commit your work), you 
 ## Testing the set up
 If you activated the pixi environment, type `pytest`. If not, type `pixi run pytest`. You should have one dummy test that runs on that command.
 
-## Linters and pre-commit hooks
+## What does it look like when the linters and pre-commit hooks run?
 After you've installed the pre-commit hooks and have changes to commit, this is what the process will look like for committing:
 
 1. You have changes to commit:  
@@ -40,3 +40,11 @@ After you've installed the pre-commit hooks and have changes to commit, this is 
 
 6. Add the changes and redo your commit command:  
  ![final_commit](images/final_commit.png)
+
+## Adding new dependencies
+Just write ```pixi add conda_or_pip_package_name```. You can add multiple dependencies at once (which is better than one at a time, `pixi` will have to recompute work otherwise) by adding a space between the package names. I.e. `pixi add package1 package2 package3`.
+
+You'll see that the `pixi.toml` and `pixi.lock` files will change after adding your new dependencies -- make sure to add those changes in your next commit!
+
+## Removing a dependency
+```pixi remove package_name```
