@@ -1,0 +1,26 @@
+site_name: IceDyno Documentation
+
+nav:
+  - Home: index.md
+  - Setup: setup.md
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+            setup_commands:
+                - import sys
+                - sys.path.append('../')
+copyright: Maintained by Julieanna Bacon.
+theme:
+  name: mkdocs
+  feature:
+    tabs: true
+  palette:
+    primary: white
+    accent: blue
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
