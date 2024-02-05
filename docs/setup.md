@@ -21,7 +21,7 @@ To set up the automatic linters (that run every time you commit your work), you 
 If you activated the pixi environment, type `pytest`. If not, type `pixi run pytest`. You should have one dummy test that runs on that command.
 
 ## Linters and pre-commit hooks
-After you've installed the pre-commit hooks and have changes to commit, this is what the process will look like:
+After you've installed the pre-commit hooks and have changes to commit, this is what the process will look like for committing:
 
 1. You have changes to commit:
 ![added_changes](images/added_changes.png)
