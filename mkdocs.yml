@@ -3,6 +3,7 @@ site_name: IceDyno Documentation
 nav:
   - Home: index.md
   - Setup: setup.md
+  - Workflow: workflow.md
 plugins:
   - search
   - mkdocstrings:
