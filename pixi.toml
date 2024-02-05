@@ -11,3 +11,5 @@ platforms = ["win-64", "linux-64", "osx-64"]
 [dependencies]
 pre-commit = ">=3.6.0,<3.7"
 pytest = ">=8.0.0,<8.1"
+mkdocs = ">=1.5.3,<1.6"
+mkdocstrings = ">=0.24.0,<0.25"
