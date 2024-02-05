@@ -23,20 +23,20 @@ If you activated the pixi environment, type `pytest`. If not, type `pixi run pyt
 ## Linters and pre-commit hooks
 After you've installed the pre-commit hooks and have changes to commit, this is what the process will look like for committing:
 
-1. You have changes to commit:
+1. You have changes to commit:  
 ![added_changes](images/added_changes.png)
 
-2. Commit with a descriptive message:
+2. Commit with a descriptive message:  
 ![descriptive_commit](images/descriptive_commit.png)
 
-3. One-time setup of the linters:
+3. One-time setup of the linters:  
 ![pre_commit_hook_installation](images/pre_commit_hook_installation.png)
 
-4. Our code was not already compliant with the linters, so they "failed" our commit and automatically changed things about our code to become compliant:
+4. Our code was not already compliant with the linters, so they "failed" our commit and automatically changed things about our code to become compliant:  
 ![failed_commit](images/failed_commit.png)
 
-5. Go ahead and inspect what got modified if you'd like:
+5. Go ahead and inspect what got modified if you'd like:  
 ![inspect_changes](images/inspect_changes.png)
 
-6. Add the changes and redo your commit command:
+6. Add the changes and redo your commit command:  
  ![final_commit](images/final_commit.png)
