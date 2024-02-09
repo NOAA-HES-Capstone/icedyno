@@ -5,7 +5,17 @@ new to GitHub. Before we start, anything that is within the angle brackets (`<`
 or `>`) should be replaced as a whole. For example: `<your-username>` should be 
 replaced to something like `SooluThomas`
 
-## Setting up SSH keys to easily clone, push, pull contents from GH repo
+## Table of contents
+
+- [Set up SSH keys](#set-up-ssh-keys)
+- [Clone repository](#clone-repository)
+- [Create feature branches](#create-feature-branches)
+- [Check username and email in your local git](#check-username-and-email-in-your-local-git)
+- [Add, commit and push changes to feature branch](#add-commit-and-push-changes-to-feature-branch)
+- [Create Pull Request](#create-pull-request)
+- [Pull changes from the `main` to feature branch](#pull-changes-from-the-main-to-feature-branch)
+
+## Set up SSH keys
 
 Most of GitHub's documentation is pretty good. So pointing to GH docs for 
 1. [Check for existing SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys)
@@ -15,7 +25,7 @@ Most of GitHub's documentation is pretty good. So pointing to GH docs for
 3. [Add a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
 4. [Test your SSH connection](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection)
 
-## Clone the repo
+## Clone repository
 
 Once SSH keys are set up, in your terminal move to the which ever directory
 you want to have the local repo copy to live using the command
@@ -37,7 +47,7 @@ top right of the repo -> SSH)_
 Once this is done, you should be able to see the main branch _(by default)_
 locally.
 
-## Creating feature branches
+## Create feature branches
 
 Create a branch using the command
 
@@ -51,9 +61,10 @@ git branch
 # `git checkout <branch-name>` to go to different branch
 ```
 
-## Checking if your username and email are correct in your local git
+## Check username and email in your local git
 
-This is an optional step but might be nice to have. Run the following:
+This is an optional step but might be nice to have. This is a one-time thing
+to do. Run the following:
 
 ```bash
 git config user.name
@@ -88,10 +99,11 @@ git commit -m "Type out commit message with a one line summary briefing the chan
 git push origin <your-initials>/<branch-name>
 ```
 
-## Create Pull Request (PR)
+## Create Pull Request
 
 If you are **pushing from a branch for the first time**, the first commit will
-show a link that point to creating a PR directly. It should be something like
+show a link that point to creating a pull request (PR) directly. It should be
+something like
 
 ```bash
 Enumerating objects: 4, done.
@@ -112,7 +124,7 @@ Another way to open a PR is going to the repo itself and find your branch name
 under the branch selector in the repository. After you click on it, it should
 have a button to create a pull request.
 
-## Pull changes from the `main` to our feature branch
+## Pull changes from the `main` to feature branch
 
 There could be cases where other PRs could be merged before ours and so we will
 need to pull those changes in our branch before we can merge or to make sure
