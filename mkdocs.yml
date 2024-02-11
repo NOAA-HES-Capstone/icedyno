@@ -4,6 +4,7 @@ nav:
   - Home: index.md
   - Setup: setup.md
   - Workflow: workflow.md
+  - GitHub: GH-cheatsheet.md
 plugins:
   - search
   - mkdocstrings:
