@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - soo-deploy-docs
 
 env:
   PYTHON_VERSION: "3.10"
