@@ -1,0 +1,50 @@
+name: Deploy mkdocs
+
+on:
+  push:
+    branches:
+      - main
+      - soo-deploy-docs
+    # This is just for testing purposes and needs to be removed
+    # before merge
+    pull_request:
+      types:
+      - opened
+      - synchronize
+
+env:
+  PYTHON_VERSION: "3.10"
+
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Pixi
+        uses: prefix-dev/setup-pixi@v0.4.3
+        with:
+          pixi-version: ${{ env.PIXI_version }} 
+          cache: true
+
+      - name: Install repository
+        run: |
+          pixi install
+    
+      - name: Build and deploy docs
+        run: |
+          git remote add gh-token "https://SooluThomas:${{ secrets.GH_TOKEN }}@github.com/NOAA-HES-Capstone/icedyno.git"
+          git fetch gh-token && git fetch gh-token gh-pages:gh-pages
+          pixi run mkdocs build
+          pixi run mkdocs gh-deploy --force --clean --verbose --remote-name gh-token
