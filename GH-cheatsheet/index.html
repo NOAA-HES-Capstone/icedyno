@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>GitHub - IceDyno Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">IceDyno Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../setup/" class="nav-link">Setup</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../workflow/" class="nav-link">Workflow</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">GitHub</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../workflow/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#github-cheatsheet" class="nav-link">GitHub Cheatsheet</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#table-of-contents" class="nav-link">Table of contents</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#set-up-ssh-keys" class="nav-link">Set up SSH keys</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#clone-repository" class="nav-link">Clone repository</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#create-feature-branches" class="nav-link">Create feature branches</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#check-username-and-email-in-your-local-git" class="nav-link">Check username and email in your local git</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#add-commit-and-push-changes-to-feature-branch" class="nav-link">Add, commit and push changes to feature branch</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#create-pull-request" class="nav-link">Create Pull Request</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#pull-changes-from-the-main-to-feature-branch" class="nav-link">Pull changes from the main to feature branch</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="github-cheatsheet">GitHub Cheatsheet<a class="headerlink" href="#github-cheatsheet" title="Permanent link">&para;</a></h1>
+<p>Here's a quick cheatsheet on getting started with a GitHub project, if you are
+new to GitHub. Before we start, anything that is within the angle brackets (<code>&lt;</code>
+or <code>&gt;</code>) should be replaced as a whole. For example: <code>&lt;your-username&gt;</code> should be 
+replaced to something like <code>SooluThomas</code></p>
+<h2 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#set-up-ssh-keys">Set up SSH keys</a></li>
+<li><a href="#clone-repository">Clone repository</a></li>
+<li><a href="#create-feature-branches">Create feature branches</a></li>
+<li><a href="#check-username-and-email-in-your-local-git">Check username and email in your local git</a></li>
+<li><a href="#add-commit-and-push-changes-to-feature-branch">Add, commit and push changes to feature branch</a></li>
+<li><a href="#create-pull-request">Create Pull Request</a></li>
+<li><a href="#pull-changes-from-the-main-to-feature-branch">Pull changes from the <code>main</code> to feature branch</a></li>
+</ul>
+<h2 id="set-up-ssh-keys">Set up SSH keys<a class="headerlink" href="#set-up-ssh-keys" title="Permanent link">&para;</a></h2>
+<p>Most of GitHub's documentation is pretty good. So pointing to GH docs for 
+1. <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys">Check for existing SSH key</a>
+2. <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">Generate new SSH key</a>
+    &gt; Its easier to just follow the 3 steps mentioned under 
+    <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key">"Generating a new SSH key"</a> section.
+3. <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Add a new SSH key</a>
+4. <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection">Test your SSH connection</a></p>
+<h2 id="clone-repository">Clone repository<a class="headerlink" href="#clone-repository" title="Permanent link">&para;</a></h2>
+<p>Once SSH keys are set up, in your terminal move to the which ever directory
+you want to have the local repo copy to live using the command</p>
+<pre><code class="language-bash">cd Documents/&lt;your-folder-path&gt;/Capstone
+</code></pre>
+<p>Then clone the repo using the command</p>
+<pre><code class="language-bash">git clone git@github.com:NOAA-HES-Capstone/icedyno.git
+cd icedyno
+</code></pre>
+<p><em>(Tip: the link was obtained from the repo -&gt; green button called "Code" on 
+top right of the repo -&gt; SSH)</em></p>
+<p>Once this is done, you should be able to see the main branch <em>(by default)</em>
+locally.</p>
+<h2 id="create-feature-branches">Create feature branches<a class="headerlink" href="#create-feature-branches" title="Permanent link">&para;</a></h2>
+<p>Create a branch using the command</p>
+<pre><code class="language-bash">git checkout -b &lt;your-initials&gt;/&lt;branch-name&gt;
+
+# This command can show you which branch you are in
+# The * shows the current branch you are in 
+git branch
+# you can use `git checkout main` to go to main branch and then 
+# `git checkout &lt;branch-name&gt;` to go to different branch
+</code></pre>
+<h2 id="check-username-and-email-in-your-local-git">Check username and email in your local git<a class="headerlink" href="#check-username-and-email-in-your-local-git" title="Permanent link">&para;</a></h2>
+<p>This is an optional step but might be nice to have. This is a one-time thing
+to do. Run the following:</p>
+<pre><code class="language-bash">git config user.name
+git config user.email
+</code></pre>
+<p>If this is showing the correct github username and email, you are good. 
+Otherwise, run</p>
+<pre><code class="language-bash">git config user.name &lt;your-username&gt;
+git config user.email &lt;your-registered-email&gt;
+</code></pre>
+<h2 id="add-commit-and-push-changes-to-feature-branch">Add, commit and push changes to feature branch<a class="headerlink" href="#add-commit-and-push-changes-to-feature-branch" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash"># This will show us a summary of the files changed when compared main branch
+git status
+
+# Add the files that were changed
+# It is always best to add the file names rather than to use `git add *`
+# so that unwanted files don't get added
+git add &lt;path&gt;/&lt;file-name&gt;
+
+# Commit your changes
+git commit -m &quot;Type out commit message with a one line summary briefing the changes&quot;
+# TIP: if you want to add more descriptive commit add -m &quot;descriptive message&quot;
+# after the one line summary message
+
+# [ALWAYS] Push commit to your branch
+git push origin &lt;your-initials&gt;/&lt;branch-name&gt;
+</code></pre>
+<h2 id="create-pull-request">Create Pull Request<a class="headerlink" href="#create-pull-request" title="Permanent link">&para;</a></h2>
+<p>If you are <strong>pushing from a branch for the first time</strong>, the first commit will
+show a link that point to creating a pull request (PR) directly. It should be
+something like</p>
+<pre><code class="language-bash">Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 1.36 KiB | 1.36 MiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+remote: 
+remote: Create a pull request for 'soo/add-gh-cheatsheat' on GitHub by visiting
+remote:      https://github.com/NOAA-HES-Capstone/icedyno/pull/new/soo/add-gh-cheatsheat
+remote: 
+To github.com:NOAA-HES-Capstone/icedyno.git
+ * [new branch]      soo/add-gh-cheatsheat -&gt; soo/add-gh-cheatsheat
+</code></pre>
+<p>Another way to open a PR is going to the repo itself and find your branch name
+under the branch selector in the repository. After you click on it, it should
+have a button to create a pull request.</p>
+<h2 id="pull-changes-from-the-main-to-feature-branch">Pull changes from the <code>main</code> to feature branch<a class="headerlink" href="#pull-changes-from-the-main-to-feature-branch" title="Permanent link">&para;</a></h2>
+<p>There could be cases where other PRs could be merged before ours and so we will
+need to pull those changes in our branch before we can merge or to make sure
+that our work doesn't break anything with the new changes made in the main
+branch. For this we can use</p>
+<pre><code class="language-bash"># Fetch all the changes from remote to local
+git fetch
+
+# pull the changes from main to our feature branch
+git pull origin main
+</code></pre>
+<p>If your are pulling for the first time in that repo, the might be a lot more 
+that will be asked in the terminal and run the command for <strong>merge</strong> which is
+something like</p>
+<pre><code class="language-bash">git config pull.rebase false
+</code></pre>
+<hr />
+<p>Let's keep this file growing with the GitHub tips that you get know and would
+like to share with others.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Maintained by Julieanna Bacon.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
