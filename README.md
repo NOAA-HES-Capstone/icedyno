@@ -8,7 +8,7 @@
 ## Welcome and Installation Guide
 
 Welcome to the project! This is a Data Science Master's Capstone at Harvard University's Extension School, in collaboration with NOAA.
-Please see here for project setup and installation: [Setup](docs/setup.md).
+Please see here for project setup and installation: [Setup](https://noaa-hes-capstone.github.io/icedyno/setup/).
 
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/89/ExtensionFlag.png/170px-ExtensionFlag.png" alt="NOAA Logo", width="200"/>
