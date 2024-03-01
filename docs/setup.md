@@ -3,7 +3,7 @@ To get started, clone the repo, checkout this branch, using Linux install pixi w
 ```curl -fsSL https://pixi.sh/install.sh | bash```
 
 For Mac, install via homebrew with
-```homebrew install pixi```
+```brew install pixi```
 
 If using windows, install pixi with:  
 ```iwr -useb https://pixi.sh/install.ps1 | iex```
