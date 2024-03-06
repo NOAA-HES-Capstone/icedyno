@@ -1,8 +1,10 @@
 """ 
 Downloads all MIZ shapefiles from this link: https://usicecenter.gov/Products/ArchiveSearchMulti?table=DailyArcticShapefiles
+You can re-run this script to download the latest set of available MIZ products.
+Will skip downloading files that are already on disk.
 
 To run:
-pixi run python scripts/download_all_miz.py
+``pixi run python scripts/download_all_miz.py``
 """
 import os
 from datetime import datetime
@@ -16,9 +18,14 @@ def format_date(date_obj: datetime) -> str:
     return date_obj.strftime("%m/%d/%Y")
 
 
-def get_date(string: str) -> str:
-    """From file link, extract date for MIZ product"""
-    date_str = string.split("=")[1][1:]
+def get_date(file_link: str) -> str:
+    """
+    From file link (relative to base url) to specific MIZ product, extract date.
+    Input looks like: /File/DownloadArchive?prd=503062024
+    """
+    end_of_file_link = file_link.split("/")[-1]
+    date_str = end_of_file_link.split("=")[1][1:]
+
     if len(date_str) != 8:
         raise ValueError(
             "The date string must be 8 characters long in the form 'MMDDYYYY'."
@@ -70,7 +77,7 @@ def download_miz_files(
 
         for file_link in file_links:
             full_url = base_url + file_link
-            datestring = get_date(file_link.split("/")[-1])
+            datestring = get_date(file_link)
             file_name = f"nic_miz{datestring}nc_pl_a.zip"
             file_path = os.path.join(directory, file_name)
 
