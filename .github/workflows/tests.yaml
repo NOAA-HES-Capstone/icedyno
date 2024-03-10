@@ -1,9 +1,8 @@
 name: Install Python, pixi, and project
 
 on:
+  # Will run on push to every branch
   push:
-    branches:
-      - main
   pull_request:
     types:
       - opened
@@ -11,7 +10,7 @@ on:
 
 env:
   PYTHON_VERSION: "3.10"
-  PIXI_VERSION: "v0.12.0"
+  PIXI_VERSION: "v0.13.0"
 
 jobs:
   Install-Informatics-Pipeline:
@@ -29,7 +28,7 @@ jobs:
         uses: prefix-dev/setup-pixi@v0.4.3
         with:
           pixi-version: ${{ env.PIXI_version }} 
-          cache: true
+          cache: false
 
       - name: Install repository
         run: |
