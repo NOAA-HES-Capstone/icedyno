@@ -1,6 +1,7 @@
 # Custom Ignores
 .ruff_cache/
 *.html
+data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
