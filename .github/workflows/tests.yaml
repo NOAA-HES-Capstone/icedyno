@@ -30,6 +30,7 @@ jobs:
         with:
           pixi-version: ${{ env.PIXI_version }} 
           cache: true
+          cache-write: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
 
       - name: Install repository
         run: |
