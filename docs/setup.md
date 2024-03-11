@@ -20,6 +20,11 @@ To set up the automatic linters (that run every time you commit your work), you 
 
 ![install_pre_commit](images/install_pre_commit.png)
 
+Finish the installation proces with:  
+```pixi run pip install -e .```
+
+If you skip this last step, you will **not** be able to import `icedyno` as an installed python library. 
+
 ## Testing the set up
 If you activated the pixi environment, type `pytest`. If not, type `pixi run pytest`. You should have one dummy test that runs on that command.
 
