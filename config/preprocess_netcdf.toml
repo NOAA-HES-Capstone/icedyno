@@ -1,4 +1,12 @@
 [CropFiles]
+# Full relative directory is data/input_dir, data/output_dir
 input_dir = "ims_1km"
-output_dir = "ims_netcdf_1km_cropped_4_000_000km_window"
-window_size = 4000
+# Change this output_dir name to reflect the window size and center coordinates selected
+output_dir = "ims_netcdf_1km_cropped_4_000_000m_window"
+
+# Final shape will be (window_size*2, window_size*2)
+window_size = 4000 #km
+
+# Expect str format in x,y coordinates if provided. Example: "1000, 2000"
+# Defaults to center of current grid system if "None"
+center_coordinates = "1000, 1500"#None"
