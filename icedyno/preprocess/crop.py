@@ -78,7 +78,6 @@ class CropFiles(luigi.Task):
                 x=slice(x_coord - window, x_coord + window),
                 y=slice(y_coord - window, y_coord + window),
             )
-
             # Write the cropped data to a new NetCDF file
             cropped_ds.to_netcdf(output_filename, engine="h5netcdf")
 
