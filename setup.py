@@ -26,14 +26,14 @@ install_requires = [
 
 setup(
     name="icedyno",
-    version="0.1.0",
-    description="",
-    author="",
+    version=pixi_config["project"]["version"],
+    description=pixi_config["project"]["description"],
+    author="Julieanna Bacon, Soolu Thomas, Brendon Gory, Matthew Thanos, Ruchi Asthana",
     packages=find_packages(),
     install_requires=install_requires,
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.8",
 )
