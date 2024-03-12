@@ -1,0 +1,4 @@
+[CropFiles]
+input_dir = "ims_1km"
+output_dir = "ims_netcdf_1km_cropped_4_000_000km_window"
+window_size = 4000
