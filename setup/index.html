@@ -131,6 +131,9 @@
 <p>To set up the automatic linters (that run every time you commit your work), you would run:<br />
 <code>pixi run pre-commit install</code></p>
 <p><img alt="install_pre_commit" src="../images/install_pre_commit.png" /></p>
+<p>Finish the installation proces with:<br />
+<code>pixi run pip install -e .</code></p>
+<p>If you skip this last step, you will <strong>not</strong> be able to import <code>icedyno</code> as an installed python library. </p>
 <h2 id="testing-the-set-up">Testing the set up<a class="headerlink" href="#testing-the-set-up" title="Permanent link">&para;</a></h2>
 <p>If you activated the pixi environment, type <code>pytest</code>. If not, type <code>pixi run pytest</code>. You should have one dummy test that runs on that command.</p>
 <h2 id="what-does-it-look-like-when-the-linters-and-pre-commit-hooks-run">What does it look like when the linters and pre-commit hooks run?<a class="headerlink" href="#what-does-it-look-like-when-the-linters-and-pre-commit-hooks-run" title="Permanent link">&para;</a></h2>

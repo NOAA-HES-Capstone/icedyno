@@ -81,6 +81,10 @@
             
             <li class="nav-item" data-level="1"><a href="#icedyno-dev-workflow" class="nav-link">IceDyno Dev Workflow</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#resolving-rebase-conflicts-with-pixilock" class="nav-link">Resolving rebase conflicts with pixi.lock</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -89,7 +93,10 @@
                     <div class="col-md-9" role="main">
 
 <h1 id="icedyno-dev-workflow">IceDyno Dev Workflow<a class="headerlink" href="#icedyno-dev-workflow" title="Permanent link">&para;</a></h1>
-<p>This is where we should document how we should merge/rebase/squash/etc and things we should know while working.</p></div>
+<p>This is where we should document how we should merge/rebase/squash/etc and things we should know while working.</p>
+<h2 id="resolving-rebase-conflicts-with-pixilock">Resolving rebase conflicts with pixi.lock<a class="headerlink" href="#resolving-rebase-conflicts-with-pixilock" title="Permanent link">&para;</a></h2>
+<p>You will only enounter this if you have added/removed dependencies and main has received commits since you first branched that included new/removed dependencies.</p>
+<p>If you encounter this, please make sure that the pixi.toml contains the (non-duplicated) additions from your commits and main's, then delete the pixi.lock and run <code>pixi install</code> to regnerate the lock file given both sets of dependencies.</p></div>
             </div>
         </div>
 
