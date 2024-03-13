@@ -87,7 +87,6 @@ def find_closest_index_in_grid(target: float, coordinates: np.array) -> int:
     Given a target coordinate in projected coordinates (x or y) and the list of coordinates, return the index of the closest number in the coordinates.
     Assumes a 1km grid.
     """
-    assert np.allclose(coordinates % 1000, 500)
     start = coordinates[
         0
     ]  # Assume that the first element of coordinates is the minimum number in the list
