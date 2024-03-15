@@ -66,12 +66,11 @@ class CropFiles(luigi.Task):
                 # Expects self.center_coordinates x,y to be "x, y" float values.
                 x, y = [float(coord) for coord in self.center_coordinates.split(",")]
 
-                # Project x, y to the defined grid and find the index in the grid corresponding to that pair.
-                x_coord = find_closest_index_in_grid(x, ds.x)
-                y_coord = find_closest_index_in_grid(y, ds.y)
+                x_coord = x
+                y_coord = y
             else:
-                x_coord = ds["x"].shape[0] // 2
-                y_coord = ds["y"].shape[0] // 2
+                x_coord = np.min(np.abs(ds.x))
+                y_coord = np.min(np.abs(ds.y))
             window = self.window_size * 1000  # from km to meters
 
             cropped_ds = ds.sel(
