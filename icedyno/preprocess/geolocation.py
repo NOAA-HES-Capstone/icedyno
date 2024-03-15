@@ -11,8 +11,9 @@ import numpy as np
 
 # Earth-parameter defualts
 TRUE_SCALE_LATITUDE = 60
-EARTH_RADIUS_KM = 6378.273
-EARTH_ECCENTRICITY = 0.081816153
+EARTH_RADIUS_KM = 6378.137
+# Derived from proj4 string: a=6378137, b=6356257 in IMS user guide
+EARTH_ECCENTRICITY = 0.08275970933894519
 
 
 def polar_xy_to_lonlat(
@@ -69,7 +70,9 @@ def polar_xy_to_lonlat(
     lat = lat * 180 / np.pi
     lon = np.arctan2(x, -y)
     lon = lon * 180 / np.pi
-    lon = lon + np.less(lon, 0) * 360
+    print("this is lon: ", lon)
+    # lon = lon + np.less(lon, 0) * 360
+    # print("again lon: ", lon)
     return lon, lat
 
 
