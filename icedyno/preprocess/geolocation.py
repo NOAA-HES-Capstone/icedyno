@@ -70,9 +70,7 @@ def polar_xy_to_lonlat(
     lat = lat * 180 / np.pi
     lon = np.arctan2(x, -y)
     lon = lon * 180 / np.pi
-    print("this is lon: ", lon)
-    # lon = lon + np.less(lon, 0) * 360
-    # print("again lon: ", lon)
+
     return lon, lat
 
 
