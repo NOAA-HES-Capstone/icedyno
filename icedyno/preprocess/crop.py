@@ -61,29 +61,40 @@ class CropRotateNetCDF(luigi.Task):
             if os.path.exists(output_filename):
                 print(cdf_filepath, "already on disk, skipping...")
 
-            ds = xr.open_dataset(cdf_filepath, engine="h5netcdf")
+            with xr.open_dataset(cdf_filepath, engine="h5netcdf") as ds:
+                # If specified, center the window on the lat/lon coordinates provided. Otherwise, center on middle of grid.
+                if (self.center_latitude != "None") and (
+                    self.center_longitude != "None"
+                ):
+                    # Project the lat/lon coordinates to the polar stereographic coordinates.
+                    x, y = icedyno.preprocess.geolocation.polar_lonlat_to_xy(
+                        longitude=self.center_longitude, latitude=self.center_latitude
+                    )
+                else:
+                    x = np.min(np.abs(ds.x))
+                    y = np.min(np.abs(ds.y))
 
-            # Correct the netCDF files with a 90 degree rotation so the xarray x,y grid matches polar stereographic
-            ds = rotate_netcdf(ds)
+                window = self.window_size * 1000  # from km to meters
 
-            # If specified, center the window on the lat/lon coordinates provided. Otherwise, center on middle of grid.
-            if (self.center_latitude != "None") and (self.center_longitude != "None"):
-                # Project the lat/lon coordinates to the polar stereographic coordinates.
-                x, y = icedyno.preprocess.geolocation.polar_lonlat_to_xy(
-                    longitude=self.center_longitude, latitude=self.center_latitude
+                ds = ds.sel(
+                    x=slice(x - window * 5, x + window * 5),
+                    y=slice(y - window * 5, y + window * 5),
                 )
-            else:
-                x = np.min(np.abs(ds.x))
-                y = np.min(np.abs(ds.y))
 
-            window = self.window_size * 1000  # from km to meters
+                # Correct the netCDF files with a 90 degree rotation so the xarray x,y grid matches polar stereographic
+                ds = rotate_netcdf(ds)
 
-            cropped_ds = ds.sel(
-                x=slice(x - window // 2, x + window // 2),
-                y=slice(y - window // 2, y + window // 2),
-            )
-            # Write the cropped data to a new NetCDF file
-            cropped_ds.to_netcdf(output_filename, engine="h5netcdf")
+                cropped_ds = ds.sel(
+                    x=slice(x - window // 2, x + window // 2),
+                    y=slice(y - window // 2, y + window // 2),
+                )
+                assert np.allclose(
+                    cropped_ds.IMS_Surface_Values.values.shape,
+                    (1, self.window_size, self.window_size),
+                )
+
+                # Write the cropped data to a new NetCDF file
+                cropped_ds.to_netcdf(output_filename, engine="h5netcdf")
 
 
 def rotate_netcdf(ds: xr.Dataset) -> xr.Dataset:
