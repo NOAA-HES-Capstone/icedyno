@@ -13,7 +13,7 @@ import numpy as np
 import xarray as xr
 
 
-class CropFiles(luigi.Task):
+class CropRotateNetCDF(luigi.Task):
     """
     Crop IMS and MASIE NetCDF files from the center of their grids (where x, y == 1/2*sie.shape) based on input window_size.
 
@@ -65,42 +65,44 @@ class CropFiles(luigi.Task):
             if self.center_coordinates != "None":
                 # Expects self.center_coordinates x,y to be "x, y" float values.
                 x, y = [float(coord) for coord in self.center_coordinates.split(",")]
-
-                x_coord = x
-                y_coord = y
             else:
-                x_coord = np.min(np.abs(ds.x))
-                y_coord = np.min(np.abs(ds.y))
+                x = np.min(np.abs(ds.x))
+                y = np.min(np.abs(ds.y))
+
             window = self.window_size * 1000  # from km to meters
 
+            # Correct the netCDF files with a 90 degree rotation so the xarray x,y grid matches polar stereographic
+            ds = rotate_netcdf(ds)
+
             cropped_ds = ds.sel(
-                x=slice(x_coord - window, x_coord + window),
-                y=slice(y_coord - window, y_coord + window),
+                x=slice(x - window // 2, x + window // 2),
+                y=slice(y - window // 2, y + window // 2),
             )
             # Write the cropped data to a new NetCDF file
             cropped_ds.to_netcdf(output_filename, engine="h5netcdf")
 
 
-def find_closest_index_in_grid(target: float, coordinates: np.array) -> int:
-    """
-    Given a target coordinate in projected coordinates (x or y) and the list of coordinates, return the index of the closest number in the coordinates.
-    Assumes a 1km grid.
-    """
-    assert np.allclose(coordinates % 1000, 500)
-    start = coordinates[
-        0
-    ]  # Assume that the first element of coordinates is the minimum number in the list
-    # -12287500.0 for IMS 1km data.
+def rotate_netcdf(ds: xr.Dataset) -> xr.Dataset:
+    """Rotates IMS netcdf's IMS_Surface_Values 90 degrees, which then gets the correct alignment with the typical polar sterographic grid."""
 
-    # Define the step size
-    grid_resolution = 1000  # meters
+    # Perform rotation on the 2D spatial slice
+    rotated_sie = np.rot90(
+        ds["IMS_Surface_Values"].values[0], k=1
+    )  # Rotate the 2D array
 
-    # Calculate the index of the closest number
-    index = int((target - start) // grid_resolution)
+    # Create a new DataArray with the rotated values, specifying the correct dimensions ('y', 'x') and coordinates
+    rotated_da = xr.DataArray(
+        rotated_sie, dims=("x", "y"), coords={"y": ds["y"], "x": ds["x"]}
+    )
 
-    # If the solution is correct, the target and the found value should never be more than the grid_resolution apart.
-    assert abs(coordinates[index] - target) < grid_resolution
-    return index
+    # Since we need to maintain the 'time' dimension when reassigning, use expand_dims to add 'time' back
+    rotated_da_expanded = rotated_da.expand_dims("time", axis=0)
+
+    # Correctly update the dataset's variable with the rotated data
+    # Use the .data property to assign the numpy array, not the DataArray itself
+    ds["IMS_Surface_Values"] = (("time", "y", "x"), rotated_da_expanded.data)
+
+    return ds
 
 
 if __name__ == "__main__":
@@ -117,5 +119,5 @@ if __name__ == "__main__":
     n_workers = 10
     years = range(2015, 2025)
 
-    tasks = [CropFiles(year=year) for year in years]
+    tasks = [CropRotateNetCDF(year=year) for year in years]
     luigi.build(tasks, workers=n_workers, local_scheduler=True)
