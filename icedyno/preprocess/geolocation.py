@@ -126,3 +126,21 @@ def polar_lonlat_to_xy(
     x = 1000 * rho * np.sin(lon)
     y = -1000 * rho * np.cos(lon)
     return x, y
+
+
+def find_closest_index_in_grid(target: float, coordinates: np.array) -> int:
+    """
+    For IMS 1km data, given a target coordinate in projected coordinates (x or y) and the list of coordinates,
+    return the index of the closest number in the coordinates. Assumes a 1km grid.
+    """
+    start = -12287500.0
+
+    # Define the step size
+    grid_resolution = 1000  # meters
+
+    # Calculate the index of the closest number
+    index = int((target - start) // grid_resolution)
+
+    # If the solution is correct, the target and the found value should never be more than the grid_resolution apart.
+    # assert abs(coordinates[index] - target) < grid_resolution
+    return index
