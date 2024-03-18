@@ -139,6 +139,6 @@ def find_closest_index_in_grid(target: float) -> int:
     grid_resolution = 1000  # meters
 
     # Calculate the index of the closest number
-    index = int((target - start) // grid_resolution)
+    index = int(np.round((target - start) // grid_resolution))
 
     return index
