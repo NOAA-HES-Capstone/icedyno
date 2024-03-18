@@ -12,6 +12,8 @@ import luigi
 import numpy as np
 import xarray as xr
 
+import icedyno.preprocess.geolocation
+
 
 class CropRotateNetCDF(luigi.Task):
     """
@@ -24,7 +26,8 @@ class CropRotateNetCDF(luigi.Task):
     input_dir = luigi.Parameter()
     output_dir = luigi.Parameter()
 
-    center_coordinates = luigi.Parameter()
+    center_latitude = luigi.FloatParameter()
+    center_longitude = luigi.FloatParameter()
 
     window_size = luigi.IntParameter(default=4000)
     year = luigi.IntParameter()  # Determined at runtime
@@ -49,30 +52,31 @@ class CropRotateNetCDF(luigi.Task):
                 os.path.join(year_output_dir, pathlib.Path(cdf_filepath).stem)
                 + f"_grid{self.window_size}"
             )
-            if self.center_coordinates != "None":
-                output_filename += (
-                    f"_{self.center_coordinates.replace(' ', '')}center.nc"
-                )
+            if (self.center_latitude != "None") and (self.center_longitude != "None"):
+                output_filename += f"_{str(self.center_latitude).replace('.', ',')}lat_{str(self.center_longitude).replace('.', ',')}lon.nc"
             else:
                 output_filename += ".nc"
 
+            # Don't recompute file if the expected filename in the output folder already exists.
             if os.path.exists(output_filename):
                 print(cdf_filepath, "already on disk, skipping...")
 
-            # Open the original NetCDF file
             ds = xr.open_dataset(cdf_filepath, engine="h5netcdf")
 
-            if self.center_coordinates != "None":
-                # Expects self.center_coordinates x,y to be "x, y" float values.
-                x, y = [float(coord) for coord in self.center_coordinates.split(",")]
+            # Correct the netCDF files with a 90 degree rotation so the xarray x,y grid matches polar stereographic
+            ds = rotate_netcdf(ds)
+
+            # If specified, center the window on the lat/lon coordinates provided. Otherwise, center on middle of grid.
+            if (self.center_latitude != "None") and (self.center_longitude != "None"):
+                # Project the lat/lon coordinates to the polar stereographic coordinates.
+                x, y = icedyno.preprocess.geolocation.polar_lonlat_to_xy(
+                    longitude=self.center_longitude, latitude=self.center_latitude
+                )
             else:
                 x = np.min(np.abs(ds.x))
                 y = np.min(np.abs(ds.y))
 
             window = self.window_size * 1000  # from km to meters
-
-            # Correct the netCDF files with a 90 degree rotation so the xarray x,y grid matches polar stereographic
-            ds = rotate_netcdf(ds)
 
             cropped_ds = ds.sel(
                 x=slice(x - window // 2, x + window // 2),
@@ -116,7 +120,7 @@ if __name__ == "__main__":
     luigi.configuration.add_config_path(config_path)
 
     ## Change acording to your number of cores
-    n_workers = 10
+    n_workers = 2
     years = range(2015, 2025)
 
     tasks = [CropRotateNetCDF(year=year) for year in years]
