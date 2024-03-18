@@ -128,10 +128,10 @@ def polar_lonlat_to_xy(
     return x, y
 
 
-def find_closest_index_in_grid(target: float, coordinates: np.array) -> int:
+def find_closest_index_in_grid(target: float) -> int:
     """
-    For IMS 1km data, given a target coordinate in projected coordinates (x or y) and the list of coordinates,
-    return the index of the closest number in the coordinates. Assumes a 1km grid.
+    For IMS 1km data, given a target coordinate in projected coordinates (x or y),
+    return the index of the closest number in the IMS coordinates. Assumes a 1km grid.
     """
     start = -12287500.0
 
@@ -141,6 +141,4 @@ def find_closest_index_in_grid(target: float, coordinates: np.array) -> int:
     # Calculate the index of the closest number
     index = int((target - start) // grid_resolution)
 
-    # If the solution is correct, the target and the found value should never be more than the grid_resolution apart.
-    # assert abs(coordinates[index] - target) < grid_resolution
     return index
