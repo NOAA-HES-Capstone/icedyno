@@ -12,4 +12,4 @@ window_size = 2000 #km
 # Longitude, latitude coordinates IN DEGREES for center of cropped window. 
 # Defaults to center of current grid system if either is "None"
 center_latitude = 74.0
-center_longitude = -140.0
+center_longitude = -138.0

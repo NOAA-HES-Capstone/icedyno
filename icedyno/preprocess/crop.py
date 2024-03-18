@@ -60,6 +60,7 @@ class CropRotateNetCDF(luigi.Task):
             # Don't recompute file if the expected filename in the output folder already exists.
             if os.path.exists(output_filename):
                 print(cdf_filepath, "already on disk, skipping...")
+                continue
 
             with xr.open_dataset(cdf_filepath, engine="h5netcdf") as ds:
                 # If specified, center the window on the lat/lon coordinates provided. Otherwise, center on middle of grid.
@@ -76,9 +77,11 @@ class CropRotateNetCDF(luigi.Task):
 
                 window = self.window_size * 1000  # from km to meters
 
+                center_x = np.min(np.abs(ds.x))
+                center_y = np.min(np.abs(ds.y))
                 ds = ds.sel(
-                    x=slice(x - window * 5, x + window * 5),
-                    y=slice(y - window * 5, y + window * 5),
+                    x=slice(center_x - window * 5, center_x + window * 5),
+                    y=slice(center_y - window * 5, center_y + window * 5),
                 )
 
                 # Correct the netCDF files with a 90 degree rotation so the xarray x,y grid matches polar stereographic
@@ -102,20 +105,20 @@ def rotate_netcdf(ds: xr.Dataset) -> xr.Dataset:
 
     # Perform rotation on the 2D spatial slice
     rotated_sie = np.rot90(
-        ds["IMS_Surface_Values"].values[0], k=1
+        ds["IMS_Surface_Values"].values[0], k=1, axes=(0, 1)
     )  # Rotate the 2D array
 
+    rotated_sie = rotated_sie.reshape((1, rotated_sie.shape[0], rotated_sie.shape[1]))
+
     # Create a new DataArray with the rotated values, specifying the correct dimensions ('y', 'x') and coordinates
-    rotated_da = xr.DataArray(
-        rotated_sie, dims=("x", "y"), coords={"y": ds["y"], "x": ds["x"]}
+    data_xr = xr.DataArray(
+        rotated_sie,
+        coords={"y": ds.y, "x": ds.x, "time": ds.time},
+        dims=["time", "y", "x"],
     )
 
-    # Since we need to maintain the 'time' dimension when reassigning, use expand_dims to add 'time' back
-    rotated_da_expanded = rotated_da.expand_dims("time", axis=0)
-
-    # Correctly update the dataset's variable with the rotated data
-    # Use the .data property to assign the numpy array, not the DataArray itself
-    ds["IMS_Surface_Values"] = (("time", "y", "x"), rotated_da_expanded.data)
+    # Update the original xarray dataset with the rotated values
+    ds["IMS_Surface_Values"].loc[:, :] = data_xr
 
     return ds
 
@@ -131,7 +134,7 @@ if __name__ == "__main__":
     luigi.configuration.add_config_path(config_path)
 
     ## Change acording to your number of cores
-    n_workers = 2
+    n_workers = 6
     years = range(2015, 2025)
 
     tasks = [CropRotateNetCDF(year=year) for year in years]
