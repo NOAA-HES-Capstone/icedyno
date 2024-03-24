@@ -4,7 +4,7 @@ input_dir = "ims_1km"
 
 # Change this output_dir name to reflect the window size and center coordinates selected
 # Example: _50000x_15000y
-output_dir = "ims_netcdf_1km_cropped_2_000km_window"
+output_dir = "ims_netcdf_1km_cropped_2_000km_window_74lat_-170lon"
 
 # Final shape will be (window_size, window_size)
 window_size = 2000 #km
@@ -12,4 +12,4 @@ window_size = 2000 #km
 # Longitude, latitude coordinates IN DEGREES for center of cropped window. 
 # Defaults to center of current grid system if either is "None"
 center_latitude = 74.0
-center_longitude = -138.0
+center_longitude = -170.0
