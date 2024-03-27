@@ -69,7 +69,7 @@ class BinaryTargetNetCDFGenerator(tf.keras.utils.Sequence):
     Generator for Keras training to allow multiprocessing and training on batches with only the
     batch itself being loaded into memory.
 
-    Targets a binary target (ice/no ice).
+    Targets a binary image (ice/no ice).
     """
 
     def __init__(
