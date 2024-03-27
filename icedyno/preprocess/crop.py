@@ -134,7 +134,7 @@ if __name__ == "__main__":
     luigi.configuration.add_config_path(config_path)
 
     ## Change acording to your number of cores
-    n_workers = 6
+    n_workers = 2
     years = range(2015, 2025)
 
     tasks = [CropRotateNetCDF(year=year) for year in years]
