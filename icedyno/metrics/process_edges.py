@@ -3,6 +3,7 @@ import numpy as np
 
 def process_binary_edge_image_into_coordinates(activated: np.array) -> np.array:
     """
+    Takes a numpy array of edge detected pixels (not SIE).
     Cannot take in a tensorflow tensor, input array must be between 0 and 1.
     Input array is the result of running edge-detection on Ice/No Ice array.
 
@@ -14,7 +15,7 @@ def process_binary_edge_image_into_coordinates(activated: np.array) -> np.array:
         activated: Numpy array with >= 0.5 indicating sea-ice edge.
 
     Returns:
-        numpy array of integer indices in input array corresponding to edge. Of shape (N Edges, 2)
+        numpy array of integer indices in input array corresponding to edge pixels. Of shape (N Edges, 2)
 
     """
     edges = np.where(np.round(activated) >= 1)
