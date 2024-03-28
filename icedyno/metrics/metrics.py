@@ -1,33 +1,5 @@
-import matplotlib.pyplot as plt
 import numba
 import numpy as np
-
-## Visualization for edge metrics ##
-
-
-def plot_ice_edges_with_metrics(observed_edges, model_edges):
-    """
-    Visualize observed and model ice edges on a grid, including the calculation of metrics.
-
-    Parameters:
-    - observed_edges: numpy array of observed ice edge points.
-    - model_edges: numpy array of model ice edge points.
-    """
-    # Plotting
-    plt.figure(figsize=(8, 8))
-    plt.plot(observed_edges[:, 0], observed_edges[:, 1], "bo-", label="Example Edge 1")
-    plt.plot(model_edges[:, 0], model_edges[:, 1], "ro-", label="Example Edge 2")
-
-    # Enhance plot
-    plt.title("Ice Edge Comparison with Metrics")
-    plt.xlabel("X Coordinate")
-    plt.ylabel("Y Coordinate")
-    plt.legend()
-    plt.grid(True)
-    plt.axis("equal")
-
-    plt.show()
-
 
 ## Metrics ##
 
