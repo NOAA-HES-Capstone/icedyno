@@ -97,22 +97,24 @@ class BinaryTargetGenerator(tf.keras.utils.Sequence):
             year_day: index for index, year_day in enumerate(zip(self.years, self.days))
         }
 
-        self.data_IDs = self._get_data_ids()
+        self.data_IDs = self._get_data_ids(
+            self.years[: -self.dim[2]], self.days[: -self.dim[2]]
+        )
 
-    def years_from_filenames(self):
+    def years_from_filenames(self) -> list[int]:
         years = [
             int(file.split("/")[-1].split("ims")[1][:4]) for file in self.filenames
         ]
         return years
 
-    def days_from_filenames(self):
+    def days_from_filenames(self) -> list[int]:
         days = [int(file.split("/")[-1].split("_")[0][-3:]) for file in self.filenames]
         return days
 
-    def _get_data_ids(self):
-        return list(zip(self.years, self.days))
+    def _get_data_ids(self, years: list[int], days: list[int]) -> list[tuple]:
+        return list(zip(years, days))
 
-    def get_years_days_of_batch(self, index: int):
+    def get_years_days_of_batch(self, index: int) -> list[tuple]:
         """Given a batch index, return a list of the year and days for that batch"""
         years = self.years[index * self.batch_size : (index + 1) * self.batch_size]
         days = self.days[index * self.batch_size : (index + 1) * self.batch_size]
@@ -122,7 +124,7 @@ class BinaryTargetGenerator(tf.keras.utils.Sequence):
         """Number of batches per epoch"""
         return len(self.data_IDs) // self.batch_size
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int) -> tuple[np.array, np.array]:
         """Generate one batch of data"""
         # Collect data IDs for this batch number
         batch_data_ids = self.data_IDs[
@@ -132,9 +134,9 @@ class BinaryTargetGenerator(tf.keras.utils.Sequence):
         # Generate data
         X, y = self._data_generation(batch_data_ids)
 
-        return X.astype("float16"), y.astype("int32")
+        return X.astype("float16"), y.astype("float16")
 
-    def load_n_day_chunk(self, year, day, n):
+    def load_n_day_chunk(self, year: int, day: int, n: int) -> np.array:
         """Starts at year, day and returns the next n days of processed SIE."""
         i = self.index_of_year_day[(year, day)]
         days = self.days[i : i + n]
@@ -149,7 +151,7 @@ class BinaryTargetGenerator(tf.keras.utils.Sequence):
         # Use np.stack to stack the individual 2D arrays along a new third axis, resulting in (height, width, channels)
         return np.stack(sie_chunk, axis=-1)
 
-    def load_binary_y_for_day(self, year, day, n):
+    def load_binary_y_for_day(self, year: int, day: int, n: int) -> np.array:
         """If the initial X data day is 10 with offset 3, load day 13, binarize it, and return the shape expected of y data"""
         i = self.index_of_year_day[(year, day)]
         y_data = np.expand_dims(
@@ -163,7 +165,7 @@ class BinaryTargetGenerator(tf.keras.utils.Sequence):
     def _data_generation(self, batch_data_ids):
         """Generates data containing batch_size samples"""
         X = np.empty((self.batch_size, *self.dim), dtype="float16")
-        y = np.empty((self.batch_size, self.dim[0], self.dim[1], 1), dtype="int32")
+        y = np.empty((self.batch_size, self.dim[0], self.dim[1], 1), dtype="float16")
 
         for i, (year, day) in enumerate(batch_data_ids):
             # Load a n-day chunk as the input
