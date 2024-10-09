@@ -1,0 +1,12 @@
+[ApplyLakeMaskNetCDF]
+# Full relative directory is data/input_dir, data/output_dir
+input_dir = "ims_netcdf_1km_cropped_2_000km_window_74lat_-170lon"
+
+# Change this output_dir name to reflect the window size and center coordinates selected
+# Example: _50000x_15000y
+output_dir = "masked_ims_netcdf_1km_cropped_2_000km_window_74lat_-170lon"
+
+# Final shape will be (window_size, window_size)
+window_size = 2000 #km
+
+mask_filepath = "lake_mask_74lat_-170lon.nc"
