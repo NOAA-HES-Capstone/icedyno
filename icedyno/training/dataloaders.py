@@ -175,3 +175,54 @@ class BinaryTargetGenerator(tf.keras.utils.Sequence):
             y[i] = self.load_binary_y_for_day(year, day, self.dim[2])
 
         return X, y
+
+
+class SobelGenerator(BinaryTargetGenerator):
+    """
+    Generator for Keras training to allow multiprocessing and training on batches with only the
+    batch itself being loaded into memory.
+    """
+
+    def apply_sobel_edge_detection(
+        self, image: np.array, threshold: float = 1
+    ) -> tf.Tensor:
+        """perform Sobel edge detection on an (optionally batched) image"""
+        # Ensure image is a float32 tensor for TensorFlow operations
+        image = tf.convert_to_tensor(image, dtype=tf.float32)
+        image = tf.expand_dims(image, axis=0)  # Add batch dimension
+
+        # Perform Sobel edge detection
+        sobel = tf.image.sobel_edges(image)
+        sobel_x = sobel[..., 0]
+        sobel_y = sobel[..., 1]
+
+        edges_x = tf.square(sobel_x)
+        edges_y = tf.square(sobel_y)
+        edges = edges_x + edges_y
+
+        return edges
+
+    def _data_generation(
+        self, batch_data_ids: list[tuple]
+    ) -> tuple[np.array, np.array]:
+        """Generates data containing batch_size samples"""
+        X = np.empty((self.batch_size, *self.dim), dtype="float16")
+        y = np.empty((self.batch_size, self.dim[0], self.dim[1], 2), dtype="float16")
+
+        for i, (year, day) in enumerate(batch_data_ids):
+            # Load a 5-day chunk as the input
+            X[i,] = self.load_n_day_chunk(year, day, self.dim[2])
+
+            # Load the next day as the target
+            target_image = self.load_binary_y_for_day(year, day, self.dim[2])
+
+            # Apply Sobel edge detection to the target and concatenate it to y
+            sobel_edges = self.apply_sobel_edge_detection(target_image).numpy()
+            batched_target_image = np.expand_dims(target_image, axis=0)
+            sie_sobel_target = np.concatenate(
+                [batched_target_image, sobel_edges], axis=-1
+            )
+
+            y[i] = sie_sobel_target
+
+        return X, y
